@@ -1,43 +1,23 @@
-# test-todo-list ([npm](https://www.npmjs.com/package/test-todo-list))
+# test-todo-list
 
-[![npm version](https://badge.fury.io/js/test-todo-list.svg)](https://badge.fury.io/js/test-todo-list)
-![](https://img.shields.io/npm/dt/test-todo-list.svg)
-[![Travis](https://img.shields.io/travis/piecioshka/test-todo-list.svg?maxAge=2592000)](https://travis-ci.org/piecioshka/test-todo-list)
-
-> TODO
+> :ledger: Example of TODO list
 
 ## Install
 
-```
-$ npm install -g test-todo-list
-```
+```html
+<script src="scripts/todo-list-library.js"></script>
+<script>
+function setup() {
+    new TestTODOList({
+        $input: document.querySelector('....'),
+        $list: document.querySelector('...')
+    });
+}
 
-## Usage
-
-```javascript
-```
-
-## CLI
-
-```
-```
-
-## Unit tests
-
-Use Jasmine to setup unit test:
-
-```
-$ npm test
-```
-
-## Code coverage
-
-Use Istanbul to get code coverage ratio:
-
-```
-$ npm run coverage
+window.addEventListener('DOMContentLoaded', setup);
+</script>
 ```
 
 ## License
 
-[The MIT License](http://piecioshka.mit-license.org) @ 2017
+[The MIT License](http://piecioshka.mit-license.org) @ 2018
