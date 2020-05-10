@@ -1,23 +1,11 @@
-# test-todo-list
+# todo-list-in-vanilla-example
 
-> :ledger: Example of TODO list
+:ledger: Todo list Example with [Vanilla.js](https://github.com/piecioshka/vanilla.js)
 
-## Install
+## Demo 🚀
 
-```html
-<script src="scripts/todo-list-library.js"></script>
-<script>
-function setup() {
-    new TestTODOList({
-        $input: document.querySelector('....'),
-        $list: document.querySelector('...')
-    });
-}
-
-window.addEventListener('DOMContentLoaded', setup);
-</script>
-```
+<http://piecioshka.github.io/todo-list-in-vanilla-example/>
 
 ## License
 
-[The MIT License](http://piecioshka.mit-license.org) @ 2018
+[The MIT License](http://piecioshka.mit-license.org) @ 2018-2020

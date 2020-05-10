@@ -1,0 +1,47 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    width: 960px;
+    margin: 0 auto;
+}
+
+h1 {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+em {
+    color: #af4dba;
+    font-style: normal;
+}
+
+.app {
+    display: flex;
+    justify-content: space-between;
+}
+
+input[type=text] {
+    outline: #b861c0;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+}
+
+.todo-list {
+    background-color: #903696;
+    color: white;
+    padding: 10px 30px;
+}
+
+.remove-button {
+    background-color: #ea4457;
+    border-radius: 3px;
+    border: none;
+    color: white;
+    margin-right: 10px;
+    cursor: pointer;
+}
