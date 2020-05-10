@@ -1,6 +1,6 @@
 # todo-list-in-vanilla-example
 
-:ledger: Todo list Example with [Vanilla.js](https://github.com/piecioshka/vanilla.js)
+:ledger: Todo List in [Vanilla.js](https://github.com/piecioshka/vanilla.js)
 
 ## Demo 🚀
 
