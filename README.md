@@ -1,11 +1,11 @@
-# todo-list-in-vanilla-example
+# demo-javascript-todo-list
 
-:ledger: Todo List in [Vanilla.js](https://github.com/piecioshka/vanilla.js)
+:ledger: Test JavaScript app • Todo List
 
 ## Demo 🚀
 
-<http://piecioshka.github.io/todo-list-in-vanilla-example/>
+<http://piecioshka.github.io/demo-javascript-todo-list/>
 
 ## License
 
-[The MIT License](http://piecioshka.mit-license.org) @ 2018-2020
+[The MIT License](http://piecioshka.mit-license.org) @ 2018-2022
