@@ -1,6 +1,6 @@
 # demo-javascript-todo-list
 
-:ledger: Test JavaScript app • Todo List
+🚁 Demo project in JavaScript • TODO List
 
 ## Demo 🚀
 
