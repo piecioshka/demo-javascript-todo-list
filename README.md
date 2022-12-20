@@ -2,7 +2,7 @@
 
 🚁 Demo project in JavaScript • TODO List
 
-## Demo 🚀
+## Demo 🎉
 
 <http://piecioshka.github.io/demo-javascript-todo-list/>
 
