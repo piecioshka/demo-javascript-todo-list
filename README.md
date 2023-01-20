@@ -1,6 +1,6 @@
 # demo-javascript-todo-list
 
-🚁 Demo project in JavaScript • TODO List
+🚁 Demo project in JavaScript • Todo List
 
 ## Demo 🎉
 
