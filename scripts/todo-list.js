@@ -1,17 +1,30 @@
+/**
+ * @typedef {Object} TodoListProps
+ * @property {HTMLInputElement} $input
+ * @property {HTMLUListElement} $list
+*/
+
 const ENTER_KEY_CODE = 13;
 
 class TodoList {
+
+    /**
+     * @param {TodoListProps} options
+     */
     constructor(options) {
         this.list = [];
+        /**
+         * @type {TodoListProps}
+         */
         this.settings = Object.assign({
             $input: null,
             $list: null
         }, options);
 
-        this.bindInput();
+        this._setupDOMEvents();
     }
 
-    bindInput() {
+    _setupDOMEvents() {
         this.settings.$input
             .addEventListener('keydown', ({ keyCode }) => {
                 if (keyCode !== ENTER_KEY_CODE) {
@@ -29,6 +42,9 @@ class TodoList {
             });
     }
 
+    /**
+     * @param {string} value
+     */
     _addTask(value) {
         const task = new Task(value);
         // Update UI
