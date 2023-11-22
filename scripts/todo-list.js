@@ -46,10 +46,17 @@ class TodoList {
      * @param {string} value
      */
     _addTask(value) {
-        const task = new Task(value);
+        const task = new Task(value, {
+          onRemove(taskId) {
+            const index = this.list.findIndex(item => item.id === taskId);
+            if (index !== -1) {
+              this.list.splice(index, 1);
+            }
+          }
+        });
         // Update UI
         this.settings.$list.appendChild(task.$el);
-        // Update model
+        // Update memory
         this.list.push(task);
     }
 

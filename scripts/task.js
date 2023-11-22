@@ -1,9 +1,13 @@
 class Task {
 
+    id = Math.round(Math.random() * 1000000 + Date.now());
+
     /**
      * @param {string} value
+     * @param {Object} callbacks
      */
-    constructor(value) {
+    constructor(value, callbacks) {
+        this.callbacks = callbacks;
         this.$el = this._createListElement(value);
         this._renderRemoveButton(this.$el);
     }
@@ -14,8 +18,13 @@ class Task {
     _renderRemoveButton($element) {
         const $button = this._createRemoveButton();
         $button.addEventListener('click', () => {
+            // Remove from UI
             if ($element.parentElement) {
                 $element.parentElement.removeChild($element);
+            }
+            // Remove from memory
+            if (this.callbacks.onRemove) {
+              this.callbacks.onRemove(this.id);
             }
         });
         $element.insertBefore($button, $element.firstChild);
