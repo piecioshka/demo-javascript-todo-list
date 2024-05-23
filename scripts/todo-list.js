@@ -1,12 +1,33 @@
 /**
  * @typedef {Object} TodoListProps
- * @property {HTMLInputElement} $input
- * @property {HTMLUListElement} $list
+ * @property {string} label
  */
 
 const ENTER_KEY_CODE = 13;
 
 class TodoList {
+  /**
+   * @type {HTMLInputElement|null}
+   */
+  $input = null;
+
+  /**
+   * @type {HTMLUListElement|null}
+   */
+  $list = null;
+
+  template = ({ label }) => {
+    return `
+      <div class="todo-list">
+        <label>
+          ${label}
+          <input type="text" placeholder="Enter a task..." />
+        </label>
+        <ul></ul>
+      </div>;
+    `;
+  };
+
   /**
    * @param {TodoListProps} options
    */
@@ -17,22 +38,19 @@ class TodoList {
      */
     this.settings = Object.assign(
       {
-        $input: null,
-        $list: null,
+        label: null,
       },
       options
     );
-
-    this._setupDOMEvents();
   }
 
   _setupDOMEvents() {
-    this.settings.$input.addEventListener("keydown", ({ keyCode }) => {
+    this.$input.addEventListener("keydown", ({ keyCode }) => {
       if (keyCode !== ENTER_KEY_CODE) {
         return;
       }
 
-      const value = this.settings.$input.value.trim();
+      const value = this.$input.value.trim();
 
       if (value.length === 0) {
         return;
@@ -51,7 +69,7 @@ class TodoList {
       onRemove: this._onRemove.bind(this),
     });
     // Update UI
-    this.settings.$list.appendChild(task.$el);
+    this.$list.appendChild(task.$el);
     // Update memory
     this.list.push(task);
   }
@@ -67,6 +85,16 @@ class TodoList {
   }
 
   _clearInput() {
-    this.settings.$input.value = "";
+    this.$input.value = "";
+  }
+
+  render($target) {
+    const $element = compileTemplate(
+      this.template({ label: this.settings.label })
+    );
+    $target.appendChild($element);
+    this.$input = $element.querySelector('input');
+    this.$list = $element.querySelector('ul');
+    this._setupDOMEvents();
   }
 }

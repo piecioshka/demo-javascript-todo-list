@@ -1,16 +1,13 @@
+const $ = document.querySelector.bind(document);
+
 function main() {
-  const $ = document.querySelector.bind(document);
-  new TodoList({
-    $input: $(".input-1"),
-    $list: $(".list-1"),
-  });
-  new TodoList({
-    $input: $(".input-2"),
-    $list: $(".list-2"),
-  });
-  new TodoList({
-    $input: $(".input-3"),
-    $list: $(".list-3"),
+  const $app = $("#app");
+
+  Array.from({ length: 3 }).forEach((_, index) => {
+    const todo = new TodoList({
+      label: `List no. ${index + 1}`,
+    });
+    todo.render($app);
   });
 }
 
