@@ -24,7 +24,7 @@ class Todo {
     return `
       <div class="todo">
         <form class="add-task-form">
-          <input class="add-task-input" type="text" placeholder="(${this.label}) What needs to be done?" required/>
+          <input class="add-task-input" type="text" placeholder="(${this.label}) What needs to be done?" required />
         </form>
         <ul class="tasks"></ul>
       </div>;
@@ -48,9 +48,17 @@ class Todo {
         value,
         done: false,
       });
-      this.$input.value = "";
-      this.update();
+      this.$form?.reset();
+      this._renderTasks();
     });
+
+    this._renderTasks();
+  }
+
+  _renderTasks() {
+    while (this.$list.firstChild) {
+      this.$list?.firstChild.remove();
+    }
 
     this.tasks.forEach((task) => {
       new Task({
