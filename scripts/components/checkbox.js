@@ -22,7 +22,7 @@ class Checkbox {
     this.$el?.addEventListener("click", () => {
       this.checked = !this.checked;
       this.handlers.onClick?.(this.checked);
-      this.update();
+      this.render();
     });
   }
 
@@ -34,19 +34,19 @@ class Checkbox {
   }
 
   /**
-   * @param {HTMLElement} $target
+   * @param {HTMLElement} [$target]
    */
   render($target) {
     // @ts-ignore
-    this.$el = compileTemplate(this.template());
-    $target.appendChild(this.$el);
-    this._setupListeners();
-  }
+    const $el = compileTemplate(this.template());
 
-  update() {
-    const new$el = compileTemplate(this.template());
-    this.$el?.replaceWith(new$el);
-    this.$el = new$el;
+    if (this.$el == null) {
+      $target?.appendChild($el);
+    } else {
+      this.$el?.replaceWith($el);
+    }
+
+    this.$el = $el;
     this._setupListeners();
   }
 }

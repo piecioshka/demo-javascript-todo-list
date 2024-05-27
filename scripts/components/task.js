@@ -10,7 +10,7 @@ class Task {
   handlers = {};
 
   template() {
-    return `<li class="task">
+    return `<li class="task ${this.done ? "done" : ""}">
       <label>${this.value}</label>
     </li>`;
   }

@@ -17,14 +17,17 @@ class Todo {
    */
   $list = null;
 
-  tasks = [];
+  allTasks = [];
+  activeTasks = [];
+  completedTasks = [];
   label = "";
+  mode = "active"; // all | active | completed
 
   template = () => {
     return `
       <div class="todo">
         <form class="add-task-form">
-          <input class="add-task-input" type="text" placeholder="(${this.label}) What needs to be done?" required />
+          <input class="add-task-input" type="text" placeholder="(${this.label}) What needs to be done?" required autofocus />
         </form>
         <ul class="tasks"></ul>
       </div>;
@@ -43,16 +46,56 @@ class Todo {
     this.$form?.addEventListener("submit", (evt) => {
       evt.preventDefault();
       const value = this.$input?.value.trim() ?? "";
-      this.tasks.push({
+      this.allTasks.push({
         id: Math.round(Math.random() * 1000000 + Date.now()),
         value,
         done: false,
       });
+      this._updateRelativeTasks();
       this.$form?.reset();
       this._renderTasks();
+      this._notifyUpdateTasks();
     });
 
     this._renderTasks();
+  }
+
+  _updateRelativeTasks() {
+    this.activeTasks = this.allTasks.filter((t) => !t.done);
+    this.completedTasks = this.allTasks.filter((t) => t.done);
+  }
+
+  _buildRenderedTasks() {
+    switch (this.mode) {
+      case "active":
+        return this.activeTasks;
+      case "completed":
+        return this.completedTasks;
+      case "all":
+      default:
+        return this.allTasks;
+    }
+  }
+
+  _removeTask(taskId) {
+    const index = this.allTasks.findIndex((task) => task.id === taskId);
+    if (index !== -1) {
+      this.allTasks.splice(index, 1);
+    }
+    this._updateRelativeTasks();
+  }
+
+  _removeCompletedTasks() {
+    this.allTasks = this.allTasks.filter((task) => !task.done);
+    this._updateRelativeTasks();
+  }
+
+  _resolveTask(taskId) {
+    const index = this.allTasks.findIndex((task) => task.id === taskId);
+    if (index !== -1) {
+      this.allTasks[index].done = !this.allTasks[index].done;
+    }
+    this._updateRelativeTasks();
   }
 
   _renderTasks() {
@@ -60,29 +103,39 @@ class Todo {
       this.$list?.firstChild.remove();
     }
 
-    this.tasks.forEach((task) => {
+    const tasks = this._buildRenderedTasks();
+
+    tasks.forEach((task) => {
       new Task({
         id: task.id,
         value: task.value,
         done: task.done,
         handlers: {
           onRemove: (taskId) => {
-            const index = this.tasks.findIndex((item) => item.id === taskId);
-            if (index !== -1) {
-              this.tasks.splice(index, 1);
-            }
-            this.update();
+            this._removeTask(taskId);
+            this._renderTasks();
+            this._notifyUpdateTasks();
           },
           onResolve: (taskId) => {
-            const index = this.tasks.findIndex((item) => item.id === taskId);
-            if (index !== -1) {
-              this.tasks[index].done = !this.tasks[index].done;
-            }
-            this.update();
+            this._resolveTask(taskId);
+            this._renderTasks();
+            this._notifyUpdateTasks();
           },
         },
       }).render(this.$list);
     });
+  }
+
+  _notifyUpdateTasks() {
+    this.$el?.dispatchEvent(
+      new CustomEvent("todo-update-tasks", {
+        detail: {
+          allTasks: this.allTasks,
+          activeTasks: this.activeTasks,
+          completedTasks: this.completedTasks,
+        },
+      })
+    );
   }
 
   /**
@@ -90,14 +143,20 @@ class Todo {
    */
   render($target) {
     this.$el = compileTemplate(this.template());
+    const footer = new Footer(this);
+    this.$el?.addEventListener("todo-update-filter-mode", (evt) => {
+      const { mode } = evt.detail;
+      if (this.mode !== mode) {
+        this.mode = mode;
+        this._renderTasks();
+      }
+    });
+    this.$el?.addEventListener("todo-clear-completed-tasks", () => {
+      this._removeCompletedTasks();
+      this._renderTasks();
+    });
+    footer.render(this.$el);
     $target.appendChild(this.$el);
-    this._setupListeners();
-  }
-
-  update() {
-    const new$el = compileTemplate(this.template());
-    this.$el?.replaceWith(new$el);
-    this.$el = new$el;
     this._setupListeners();
   }
 }

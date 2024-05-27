@@ -1,4 +1,7 @@
 class CloseButton {
+  /**
+   * @type {HTMLElement|null}
+   */
   $el = null;
 
   handlers = {};
